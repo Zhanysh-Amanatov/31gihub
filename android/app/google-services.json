@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "196594758089",
+    "project_id": "finik-flutter-app",
+    "storage_bucket": "finik-flutter-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196594758089:android:42ab650c26d1046e09f818",
+        "android_client_info": {
+          "package_name": "com.example.finik"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxu95o4NtSE4h2OTKQlnL6PmN4aS4iUNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
