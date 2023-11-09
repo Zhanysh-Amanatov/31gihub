@@ -89,6 +89,7 @@ class _HomeViewState extends State<HomeView> {
                 SizedBox(height: 39.h),
                 if (authUser == null)
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
                         width: 201.w,
