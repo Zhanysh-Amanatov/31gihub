@@ -7,8 +7,8 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 /*Local dependencies*/
 import 'package:finik/view_routes/routes.dart';
 import 'package:finik/views/home/home_view.dart';
-import 'package:finik/views/login/common/button_widget.dart';
-import 'package:finik/views/login/common/logo_header_description_widget.dart';
+import 'package:finik/views/common/button_widget.dart';
+import 'package:finik/views/common/logo_header_description_widget.dart';
 
 class SignUpVerifyEmailView extends StatefulWidget {
   const SignUpVerifyEmailView({super.key});

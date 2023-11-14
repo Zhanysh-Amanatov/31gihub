@@ -1,4 +1,5 @@
 /*External dependencies*/
+import 'package:finik/views/home/carousel_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 /*Local dependencies*/
@@ -24,6 +25,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    double width = 375;
+    double height = 812;
     return ScreenUtilInit(
       builder: (BuildContext context, child) => MaterialApp(
         title: 'Flutter Demo',
@@ -41,9 +44,10 @@ class MyApp extends StatelessWidget {
           forgotPasswordRoute: (context) => const ForgotPasswordView(),
           forgotPasswordLoadingRoute: (context) =>
               const ForgotPasswordLoadingView(),
+          carouselRoute: (context) => const CarouselView(),
         },
       ),
-      designSize: const Size(375, 812),
+      designSize: Size(width, height),
     );
   }
 }
@@ -59,7 +63,7 @@ class DefaultView extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            return const HomeView();
+            return const CarouselView();
           default:
             return const InitialView();
         }

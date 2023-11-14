@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*Local dependencies*/
 import 'package:finik/view_routes/routes.dart';
-import 'package:finik/views/login/common/button_widget.dart';
-import 'package:finik/views/login/common/input_label_widget.dart';
-import 'package:finik/views/login/common/input_widget.dart';
-import 'package:finik/views/login/common/logo_header_description_widget.dart';
+import 'package:finik/views/common/button_widget.dart';
+import 'package:finik/views/common/input_label_widget.dart';
+import 'package:finik/views/common/input_widget.dart';
+import 'package:finik/views/common/logo_header_description_widget.dart';
 
 class LogInView extends StatefulWidget {
   const LogInView({super.key});

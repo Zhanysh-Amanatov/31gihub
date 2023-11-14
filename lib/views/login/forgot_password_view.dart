@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:finik/view_routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:finik/views/login/common/button_widget.dart';
-import 'package:finik/views/login/common/input_label_widget.dart';
-import 'package:finik/views/login/common/input_widget.dart';
-import 'package:finik/views/login/common/logo_header_description_widget.dart';
+import 'package:finik/views/common/button_widget.dart';
+import 'package:finik/views/common/input_label_widget.dart';
+import 'package:finik/views/common/input_widget.dart';
+import 'package:finik/views/common/logo_header_description_widget.dart';
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({super.key});

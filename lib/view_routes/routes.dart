@@ -7,4 +7,5 @@ const homeViewRoute = '/homeView';
 const initialViewRoute = '/initialView';
 const forgotPasswordRoute = '/forgotPassword';
 const forgotPasswordLoadingRoute = '/forgotPasswordLoading';
+const carouselRoute = '/carouselRoute';
 const noRoute = '';
