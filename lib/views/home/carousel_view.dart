@@ -1,5 +1,4 @@
 /*External dependencies */
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
@@ -14,15 +13,9 @@ class MyItem {
   String itemDescription;
   Color itemBgColorTopLeft;
   Color itemBgColorBottomRight;
-  // AlignmentGeometry? align;
-  MyItem(
-    this.itemBgColorTopLeft,
-    this.itemBgColorBottomRight,
-    this.path,
-    this.itemName,
-    this.itemDescription,
-    // this.align,
-  );
+  Alignment alignment;
+  MyItem(this.itemBgColorTopLeft, this.itemBgColorBottomRight, this.path,
+      this.itemName, this.itemDescription, this.alignment);
 }
 
 class CarouselView extends StatefulWidget {
@@ -33,7 +26,11 @@ class CarouselView extends StatefulWidget {
 }
 
 class _CarouselViewState extends State<CarouselView> {
-  CarouselController carouselController = CarouselController();
+  final PageController _pageController = PageController(initialPage: 0);
+  int currentPage = 0;
+  final String videoUrl = 'assets/videos/mapGif.mp4';
+  // final Alignment _alignment = Alignment.topCenter;
+
   List<MyItem> items = [
     MyItem(
       const Color(0xFF709F0B),
@@ -41,6 +38,7 @@ class _CarouselViewState extends State<CarouselView> {
       'assets/images/iPhone15.png',
       "Обменивай.",
       'Получай подарки',
+      Alignment.center,
     ),
     MyItem(
       const Color(0xFF2663FF),
@@ -48,6 +46,7 @@ class _CarouselViewState extends State<CarouselView> {
       'assets/images/blueBox.png',
       'Играй.',
       'Увлекательная игра',
+      Alignment.center,
     ),
     MyItem(
       const Color(0xFF709F0B),
@@ -55,6 +54,7 @@ class _CarouselViewState extends State<CarouselView> {
       'assets/images/macBookPro16.png',
       'Везде.',
       'На всех платформах',
+      Alignment.center,
     ),
     MyItem(
       const Color(0xFFFF5959),
@@ -62,6 +62,7 @@ class _CarouselViewState extends State<CarouselView> {
       'assets/images/terminal.png',
       'Оглянись.',
       'Терминалы везде',
+      Alignment.bottomCenter,
     ),
     MyItem(
       const Color(0xFFFFC046),
@@ -69,12 +70,18 @@ class _CarouselViewState extends State<CarouselView> {
       'assets/images/mapSign.png',
       'Отмечай. Мы',
       'поставим терминал',
+      Alignment.center,
+    ),
+    MyItem(
+      const Color(0xFFFFC046),
+      const Color(0xFFFF5959),
+      'assets/videos/mapGif.mp4',
+      'Изучай',
+      'Уникальная карта',
+      Alignment.center,
     ),
   ];
 
-  final String videoUrl = 'assets/videos/mapGif.mp4';
-
-  CarouselController carouselcontroller = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,98 +93,120 @@ class _CarouselViewState extends State<CarouselView> {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.72.h,
-                  child: CarouselSlider(
-                    carouselController: carouselController,
-                    items: [
-                      ...items.map(
-                        (i) {
-                          return SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Container(
+                  height: MediaQuery.of(context).size.height * 0.82,
+                  // height: MediaQuery.of(context).size.height * 0.72,
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: items.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        currentPage = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      return Column(
+                        children: [
+                          index != 5
+                              ? Container(
                                   decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
                                         colors: [
-                                          i.itemBgColorTopLeft,
-                                          i.itemBgColorBottomRight
+                                          item.itemBgColorTopLeft,
+                                          item.itemBgColorBottomRight
                                         ]),
                                   ),
                                   width: double.infinity,
                                   height:
                                       MediaQuery.of(context).size.height * 0.65,
-                                  // color: i.itemBgColor,
                                   child: Image.asset(
-                                    i.path,
+                                    item.path,
+                                    // alignment: Alignment.center
+                                    alignment: item.alignment,
+                                    // fit: BoxFit.fitWidth,
                                   ),
-                                ),
-                                Container(
-                                  color: const Color.fromARGB(255, 0, 0, 0),
-                                  width: double.infinity,
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: 16.h,
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          i.itemName,
-                                          style: TextStyle(
-                                            color: Colors.white70,
-                                            fontSize: 32.sp,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                        Text(
-                                          i.itemDescription,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 32.sp,
-                                            fontWeight: FontWeight.w700,
-                                          ),
-                                        ),
-                                      ],
+                                )
+                              : VideoCarousel(videoUrl: videoUrl),
+                          Container(
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 16.h,
+                                horizontal: 10.w,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    item.itemName,
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 32.sp,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                ),
-                                // VideoCarousel(videoUrl: videoUrl),
-                              ],
+                                  Text(
+                                    item.itemDescription,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 32.sp,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          );
-                        },
-                      )
-                    ].toList(),
-                    options: CarouselOptions(
-                      height: double.infinity,
-                      aspectRatio: 2.0,
-                      disableCenter: true,
-                      viewportFraction: 1,
-                      enlargeCenterPage: false,
-                    ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
-                ButtonWidget(
-                  btnText: 'Далее',
-                  bgColor: const Color(0xFFD7F863),
-                  callback: () {
-                    carouselController.nextPage();
-                  },
-                ),
-                SizedBox(height: 8.h),
-                ButtonWidget(
-                  btnText: 'Пропустить',
-                  bgColor: const Color(0xFF222222),
-                  fgColor: Colors.white,
-                  callback: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        homeViewRoute, (route) => false);
-                  },
-                ),
+                currentPage == items.length - 1
+                    ? Column(
+                        children: [
+                          SizedBox(height: 52.h),
+                          ButtonWidget(
+                            btnText: 'Супер',
+                            bgColor: const Color(0xFFD7F863),
+                            callback: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  homeViewRoute, (route) => false);
+                            },
+                          ),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          ButtonWidget(
+                            btnText: 'Далее',
+                            bgColor: const Color(0xFFD7F863),
+                            callback: () {
+                              if (currentPage < items.length - 1) {
+                                _pageController.animateToPage(
+                                  currentPage + 1,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeOut,
+                                );
+                              }
+                            },
+                          ),
+                          // Spacer(),
+                          SizedBox(height: 8.h),
+                          ButtonWidget(
+                            btnText: 'Пропустить',
+                            bgColor: const Color(0xFF222222),
+                            fgColor: Colors.white,
+                            callback: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  homeViewRoute, (route) => false);
+                            },
+                          ),
+                        ],
+                      )
               ],
             ),
             Positioned(
@@ -222,11 +251,13 @@ class _VideoCarouselState extends State<VideoCarousel> {
     super.initState();
     _videoPlayerController = VideoPlayerController.asset(widget.videoUrl);
     _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      autoPlay: true,
-      looping: true,
-      aspectRatio: 16 / 9,
-    );
+        videoPlayerController: _videoPlayerController,
+        autoPlay: true,
+        looping: true,
+        aspectRatio: 1,
+        showControls: false
+        // fullScreenByDefault: true,
+        );
   }
 
   @override
@@ -238,6 +269,85 @@ class _VideoCarouselState extends State<VideoCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Chewie(controller: _chewieController);
+    return Container(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height * 0.65,
+        child: Chewie(controller: _chewieController));
   }
 }
+
+
+
+                    // child: CarouselSlider(
+                    //   carouselController: carouselController,
+                    //   items: [
+                    //     ...items.map(
+                    //       (i) {
+                    //         return SingleChildScrollView(
+                    //           child: Column(
+                    //             children: [
+                    //               Container(
+                    //                 decoration: BoxDecoration(
+                    //                   gradient: LinearGradient(
+                    //                       begin: Alignment.topLeft,
+                    //                       end: Alignment.bottomRight,
+                    //                       colors: [
+                    //                         i.itemBgColorTopLeft,
+                    //                         i.itemBgColorBottomRight
+                    //                       ]),
+                    //                 ),
+                    //                 width: double.infinity,
+                    //                 height:
+                    //                     MediaQuery.of(context).size.height * 0.65,
+                    //                 // color: i.itemBgColor,
+                    //                 child: Image.asset(
+                    //                   i.path,
+                    //                 ),
+                    //               ),
+                    //               Container(
+                    //                 color: const Color.fromARGB(255, 0, 0, 0),
+                    //                 width: double.infinity,
+                    //                 child: Padding(
+                    //                   padding: EdgeInsets.symmetric(
+                    //                     vertical: 16.h,
+                    //                     horizontal: 10.w,
+                    //                   ),
+                    //                   child: Column(
+                    //                     crossAxisAlignment:
+                    //                         CrossAxisAlignment.start,
+                    //                     children: [
+                    //                       Text(
+                    //                         i.itemName,
+                    //                         style: TextStyle(
+                    //                           color: Colors.white70,
+                    //                           fontSize: 32.sp,
+                    //                           fontWeight: FontWeight.w700,
+                    //                         ),
+                    //                       ),
+                    //                       Text(
+                    //                         i.itemDescription,
+                    //                         style: TextStyle(
+                    //                           color: Colors.white,
+                    //                           fontSize: 32.sp,
+                    //                           fontWeight: FontWeight.w700,
+                    //                         ),
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //               // VideoCarousel(videoUrl: videoUrl),
+                    //             ],
+                    //           ),
+                    //         );
+                    //       },
+                    //     )
+                    //   ].toList(),
+                    //   options: CarouselOptions(
+                    //     height: double.infinity,
+                    //     aspectRatio: 2.0,
+                    //     disableCenter: true,
+                    //     viewportFraction: 1,
+                    //     enlargeCenterPage: false,
+                    //   ),
+                    // ),

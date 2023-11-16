@@ -1,10 +1,11 @@
 /*External dependencies*/
-import 'package:finik/views/home/carousel_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 /*Local dependencies*/
 import 'package:finik/view_routes/routes.dart';
 import 'package:finik/firebase_options.dart';
+import 'package:finik/views/home/carousel_view.dart';
 import 'package:finik/views/home/home_view.dart';
 import 'package:finik/views/login/forgot_password_loading_view.dart';
 import 'package:finik/views/login/forgot_password_view.dart';
@@ -16,7 +17,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
