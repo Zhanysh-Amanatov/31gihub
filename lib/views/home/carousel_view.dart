@@ -14,8 +14,14 @@ class MyItem {
   Color itemBgColorTopLeft;
   Color itemBgColorBottomRight;
   Alignment alignment;
-  MyItem(this.itemBgColorTopLeft, this.itemBgColorBottomRight, this.path,
-      this.itemName, this.itemDescription, this.alignment);
+  MyItem(
+    this.itemBgColorTopLeft,
+    this.itemBgColorBottomRight,
+    this.path,
+    this.itemName,
+    this.itemDescription,
+    this.alignment,
+  );
 }
 
 class CarouselView extends StatefulWidget {
