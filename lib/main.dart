@@ -2,8 +2,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:bloc/bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 /*Local dependencies*/
 import 'package:finik/view_routes/routes.dart';
 import 'package:finik/firebase_options.dart';
@@ -12,7 +10,7 @@ import 'package:finik/views/home/home_view.dart';
 import 'package:finik/views/forgotPassword/forgot_password_loading_view.dart';
 import 'package:finik/views/forgotPassword/forgot_password_view.dart';
 import 'package:finik/views/singup/sign_up_verify_email_view.dart';
-import 'package:finik/views/login/initial_view.dart';
+import 'package:finik/views/initial_view.dart';
 import 'package:finik/views/login/log_in_view.dart';
 import 'package:finik/views/singup/sign_up_email_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
