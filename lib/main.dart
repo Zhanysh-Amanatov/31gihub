@@ -1,7 +1,10 @@
 /*External dependencies*/
+import 'package:finik/bloc/bloc/auth_bloc.dart';
+import 'package:finik/data/repositories/auth_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 /*Local dependencies*/
 import 'package:finik/view_routes/routes.dart';
 import 'package:finik/firebase_options.dart';
@@ -31,27 +34,35 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = 375;
     double height = 812;
-    return ScreenUtilInit(
-      builder: (BuildContext context, child) => MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-          useMaterial3: true,
+    return RepositoryProvider(
+      create: (context) => AuthRepository(),
+      child: BlocProvider(
+        create: (context) => AuthBloc(
+            authRepository: RepositoryProvider.of<AuthRepository>(context)),
+        child: ScreenUtilInit(
+          builder: (BuildContext context, child) => MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+              useMaterial3: true,
+            ),
+            home: const DefaultView(),
+            routes: {
+              logInRoute: (context) => const LogInView(),
+              signUpEmailRoute: (context) => const SignUpEmailView(),
+              signUpVerifyEmailRoute: (context) =>
+                  const SignUpVerifyEmailView(),
+              homeViewRoute: (context) => const HomeView(),
+              initialViewRoute: (context) => const InitialView(),
+              forgotPasswordRoute: (context) => const ForgotPasswordView(),
+              forgotPasswordLoadingRoute: (context) =>
+                  const ForgotPasswordLoadingView(),
+              carouselRoute: (context) => const CarouselView(),
+            },
+          ),
+          designSize: Size(width, height),
         ),
-        home: const DefaultView(),
-        routes: {
-          logInRoute: (context) => const LogInView(),
-          signUpEmailRoute: (context) => const SignUpEmailView(),
-          signUpVerifyEmailRoute: (context) => const SignUpVerifyEmailView(),
-          homeViewRoute: (context) => const HomeView(),
-          initialViewRoute: (context) => const InitialView(),
-          forgotPasswordRoute: (context) => const ForgotPasswordView(),
-          forgotPasswordLoadingRoute: (context) =>
-              const ForgotPasswordLoadingView(),
-          carouselRoute: (context) => const CarouselView(),
-        },
       ),
-      designSize: Size(width, height),
     );
   }
 }
