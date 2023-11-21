@@ -140,14 +140,12 @@ class _SignUpEmailViewState extends State<SignUpEmailView> {
                             AlwaysStoppedAnimation<Color>(Color(0xFFACF709)))
                     : ButtonWidget(
                         btnText: 'Далее',
-                        callback: signUp,
-                        // callback: () {
-                        //   final email = _email.text;
-                        //   final password = _password.text;
-                        //   print('before bloc');
-                        //   authBloc.add(SignUpEvent(email, password));
-                        //   print('after bloc');
-                        // },
+                        // callback: signUp,
+                        callback: () {
+                          final email = _email.text;
+                          final password = _password.text;
+                          authBloc.add(SignUpEvent(email, password));
+                        },
                       ),
               ]),
             ),
