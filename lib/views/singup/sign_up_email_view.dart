@@ -1,6 +1,8 @@
 /*External dependencies*/
+import 'package:finik/bloc/auth/auth_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*Local dependencies*/
 import 'package:finik/view_routes/routes.dart';
@@ -85,6 +87,8 @@ class _SignUpEmailViewState extends State<SignUpEmailView> {
 
   @override
   Widget build(BuildContext context) {
+    AuthBloc authBloc = context.read<AuthBloc>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -137,6 +141,13 @@ class _SignUpEmailViewState extends State<SignUpEmailView> {
                     : ButtonWidget(
                         btnText: 'Далее',
                         callback: signUp,
+                        // callback: () {
+                        //   final email = _email.text;
+                        //   final password = _password.text;
+                        //   print('before bloc');
+                        //   authBloc.add(SignUpEvent(email, password));
+                        //   print('after bloc');
+                        // },
                       ),
               ]),
             ),
