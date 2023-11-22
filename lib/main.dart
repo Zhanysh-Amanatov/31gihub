@@ -1,6 +1,5 @@
 /*External dependencies*/
 import 'package:finik/bloc/auth/auth_bloc.dart';
-import 'package:finik/data/repositories/auth_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,19 +9,19 @@ import 'package:finik/view_routes/routes.dart';
 import 'package:finik/firebase_options.dart';
 import 'package:finik/views/home/carousel_view.dart';
 import 'package:finik/views/home/home_view.dart';
-import 'package:finik/views/forgotPassword/forgot_password_loading_view.dart';
-import 'package:finik/views/forgotPassword/forgot_password_view.dart';
-import 'package:finik/views/singup/sign_up_verify_email_view.dart';
+import 'package:finik/views/auth/forgotPassword/forgot_password_loading_view.dart';
+import 'package:finik/views/auth/forgotPassword/forgot_password_view.dart';
+import 'package:finik/views/auth/singup/sign_up_verify_email_view.dart';
 import 'package:finik/views/initial_view.dart';
-import 'package:finik/views/login/log_in_view.dart';
-import 'package:finik/views/singup/sign_up_email_view.dart';
+import 'package:finik/views/auth/login/log_in_view.dart';
+import 'package:finik/views/auth/singup/sign_up_email_view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  // await Firebase.initializeApp(
+  // options: DefaultFirebaseOptions.currentPlatform,
+  // );
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const MyApp());
@@ -66,38 +65,50 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class DefaultView extends StatelessWidget {
-  const DefaultView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
-      if (state is LoadingState) {
-        return const CircularProgressIndicator();
-      } else if (state is InitialAuthState) {
-        return const CarouselView();
-      } else {
-        return const InitialView();
-      }
-    });
-  }
-}
 // class DefaultView extends StatelessWidget {
 //   const DefaultView({super.key});
 
 //   @override
 //   Widget build(BuildContext context) {
-//     return FutureBuilder(
-//       future: Firebase.initializeApp(
-//           options: DefaultFirebaseOptions.currentPlatform),
-//       builder: (context, snapshot) {
-//         switch (snapshot.connectionState) {
-//           case ConnectionState.done:
-//             return const CarouselView();
-//           default:
-//             return const InitialView();
+//     return BlocConsumer<AuthBloc, AuthState>(
+//       listener: (context, state) {
+//         if (state is AuthenticatedState) {
+//           Navigator.of(context).pushNamedAndRemoveUntil(
+//               signUpVerifyEmailRoute, (route) => false);
+//         }
+//       },
+//       builder: (context, state) {
+//         if (state is LoadingState) {
+//           return const CircularProgressIndicator();
+//         } else if (state is InitialAuthState) {
+//           return const CarouselView();
+//         }
+//         // else if (state is AuthenticatedState) {
+//         //   return const SignUpVerifyEmailView();
+//         // }
+//         else {
+//           return const InitialView();
 //         }
 //       },
 //     );
 //   }
 // }
+class DefaultView extends StatelessWidget {
+  const DefaultView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform),
+      builder: (context, snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            return const CarouselView();
+          default:
+            return const InitialView();
+        }
+      },
+    );
+  }
+}

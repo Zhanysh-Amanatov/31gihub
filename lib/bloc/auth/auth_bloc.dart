@@ -1,6 +1,10 @@
+// ignore_for_file: avoid_print
+
+/*External dependencies*/
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+/*Local dependencies*/
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -9,11 +13,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc() : super(InitialAuthState()) {
     on<SignUpEvent>(_mapSignUpEventToState);
+    on<LoginEvent>(_mapLoginEventToState);
   }
+
   void _mapSignUpEventToState(
       SignUpEvent event, Emitter<AuthState> emit) async {
     print('Received event: $event');
-
     try {
       emit(LoadingState());
       await _auth.createUserWithEmailAndPassword(
@@ -21,22 +26,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
       );
       await _auth.currentUser?.sendEmailVerification();
-      emit(AuthenticatedState());
+      emit(const AuthenticationSuccess());
     } catch (e) {
       emit(ErrorState(error: e.toString()));
     }
   }
 
-  Stream<AuthState> _mapLoginEventToState(LoginEvent event) async* {
+  void _mapLoginEventToState(LoginEvent event, Emitter<AuthState> emit) async {
     try {
-      yield LoadingState();
+      emit(LoadingState());
       await _auth.signInWithEmailAndPassword(
         email: event.email,
         password: event.password,
       );
-      yield AuthenticatedState();
+      emit(const AuthenticationSuccess());
     } catch (e) {
-      yield ErrorState(error: e.toString());
+      emit(ErrorState(error: e.toString()));
     }
   }
 }
