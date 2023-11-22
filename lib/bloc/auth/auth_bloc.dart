@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 /*External dependencies*/
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,57 +12,42 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(InitialAuthState()) {
     on<SignUpEvent>(_mapSignUpEventToState);
     on<LoginEvent>(_mapLoginEventToState);
+    on<ForgotPasswordEvent>(_mapForgotPasswordEventToState);
   }
 
   void _mapSignUpEventToState(
       SignUpEvent event, Emitter<AuthState> emit) async {
-    print('Received event: $event');
     try {
-      emit(LoadingState());
       await _auth.createUserWithEmailAndPassword(
         email: event.email,
         password: event.password,
       );
       await _auth.currentUser?.sendEmailVerification();
-      emit(const AuthenticationSuccess());
-    } catch (e) {
-      emit(ErrorState(error: e.toString()));
+      emit(const AuthernticationSuccessState());
+    } on FirebaseAuthException catch (e) {
+      emit(ErrorState(error: e.code));
     }
   }
 
   void _mapLoginEventToState(LoginEvent event, Emitter<AuthState> emit) async {
     try {
-      emit(LoadingState());
       await _auth.signInWithEmailAndPassword(
         email: event.email,
         password: event.password,
       );
-      emit(const AuthenticationSuccess());
-    } catch (e) {
-      emit(ErrorState(error: e.toString()));
+      emit(const AuthernticationSuccessState());
+    } on FirebaseAuthException catch (e) {
+      emit(ErrorState(error: e.code));
+    }
+  }
+
+  void _mapForgotPasswordEventToState(
+      ForgotPasswordEvent event, Emitter<AuthState> emit) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: event.email);
+      emit(ForgotPasswordState());
+    } on FirebaseAuthException catch (e) {
+      emit(ErrorState(error: e.code));
     }
   }
 }
-
-
-
-
-
-
-// class AuthBloc extends Bloc<AuthEvent, AuthState> {
-//   final AuthRepository authRepository;
-
-//   AuthBloc({required this.authRepository}) : super(Unauthenticated()) {
-//     on<SingUpRequested>((event, state) async {
-//       // emit(Loading());
-//       try {
-//         await authRepository.signUp(
-//           email: event.email,
-//           password: event.password,
-//         );
-//       } catch (e) {
-//         // emit(Unauthenticated());
-//       }
-//     });
-//   }
-// }

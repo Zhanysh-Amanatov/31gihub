@@ -35,7 +35,6 @@ class _CarouselViewState extends State<CarouselView> {
   final PageController _pageController = PageController(initialPage: 0);
   int currentPage = 0;
   final String videoUrl = 'assets/videos/mapGif.mp4';
-  // final Alignment _alignment = Alignment.topCenter;
 
   List<MyItem> items = [
     MyItem(
@@ -200,7 +199,6 @@ class _CarouselViewState extends State<CarouselView> {
                               }
                             },
                           ),
-                          // Spacer(),
                           SizedBox(height: 8.h),
                           ButtonWidget(
                             btnText: 'Пропустить',
@@ -261,9 +259,7 @@ class _VideoCarouselState extends State<VideoCarousel> {
         autoPlay: true,
         looping: true,
         aspectRatio: 1,
-        showControls: false
-        // fullScreenByDefault: true,
-        );
+        showControls: false);
   }
 
   @override
@@ -275,85 +271,9 @@ class _VideoCarouselState extends State<VideoCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         width: double.infinity,
         height: MediaQuery.of(context).size.height * 0.65,
         child: Chewie(controller: _chewieController));
   }
 }
-
-
-
-                    // child: CarouselSlider(
-                    //   carouselController: carouselController,
-                    //   items: [
-                    //     ...items.map(
-                    //       (i) {
-                    //         return SingleChildScrollView(
-                    //           child: Column(
-                    //             children: [
-                    //               Container(
-                    //                 decoration: BoxDecoration(
-                    //                   gradient: LinearGradient(
-                    //                       begin: Alignment.topLeft,
-                    //                       end: Alignment.bottomRight,
-                    //                       colors: [
-                    //                         i.itemBgColorTopLeft,
-                    //                         i.itemBgColorBottomRight
-                    //                       ]),
-                    //                 ),
-                    //                 width: double.infinity,
-                    //                 height:
-                    //                     MediaQuery.of(context).size.height * 0.65,
-                    //                 // color: i.itemBgColor,
-                    //                 child: Image.asset(
-                    //                   i.path,
-                    //                 ),
-                    //               ),
-                    //               Container(
-                    //                 color: const Color.fromARGB(255, 0, 0, 0),
-                    //                 width: double.infinity,
-                    //                 child: Padding(
-                    //                   padding: EdgeInsets.symmetric(
-                    //                     vertical: 16.h,
-                    //                     horizontal: 10.w,
-                    //                   ),
-                    //                   child: Column(
-                    //                     crossAxisAlignment:
-                    //                         CrossAxisAlignment.start,
-                    //                     children: [
-                    //                       Text(
-                    //                         i.itemName,
-                    //                         style: TextStyle(
-                    //                           color: Colors.white70,
-                    //                           fontSize: 32.sp,
-                    //                           fontWeight: FontWeight.w700,
-                    //                         ),
-                    //                       ),
-                    //                       Text(
-                    //                         i.itemDescription,
-                    //                         style: TextStyle(
-                    //                           color: Colors.white,
-                    //                           fontSize: 32.sp,
-                    //                           fontWeight: FontWeight.w700,
-                    //                         ),
-                    //                       ),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               ),
-                    //               // VideoCarousel(videoUrl: videoUrl),
-                    //             ],
-                    //           ),
-                    //         );
-                    //       },
-                    //     )
-                    //   ].toList(),
-                    //   options: CarouselOptions(
-                    //     height: double.infinity,
-                    //     aspectRatio: 2.0,
-                    //     disableCenter: true,
-                    //     viewportFraction: 1,
-                    //     enlargeCenterPage: false,
-                    //   ),
-                    // ),

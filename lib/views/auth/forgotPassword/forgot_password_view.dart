@@ -1,9 +1,10 @@
 /*External dependencies */
-import 'package:firebase_auth/firebase_auth.dart';
-/*Local dependencies */
-import 'package:finik/view_routes/routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+/*Local dependencies */
+import 'package:finik/bloc/auth/auth_bloc.dart';
+import 'package:finik/view_routes/routes.dart';
 import 'package:finik/views/common/button_widget.dart';
 import 'package:finik/views/common/input_label_widget.dart';
 import 'package:finik/views/common/input_widget.dart';
@@ -19,7 +20,6 @@ class ForgotPasswordView extends StatefulWidget {
 class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   late final TextEditingController _email;
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -37,83 +37,67 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        color: Colors.black,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: SingleChildScrollView(
-              child: Form(
-            key: _formKey,
-            child: Column(children: [
-              LogoHeaderDescriptionWidget(
-                header: 'Новый пароль',
-                style: TextStyle(
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'NeueMachina',
-                  color: Colors.white70,
-                ),
-                height: 8.h,
-              ),
-              SizedBox(height: 32.h),
-              const InputLabelWidget(inputLabel: 'Нам нужна только ваша почта'),
-              SizedBox(height: 16.h),
-              InputWidget(
-                controller: _email,
-                inputType: TextInputType.emailAddress,
-                hintText: 'Enter email',
-                icon: const Icon(Icons.email),
-              ),
-              SizedBox(height: 345.h),
-              _isLoading
-                  ? const CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(0xFFACF709)))
-                  : ButtonWidget(
-                      btnText: 'Далее',
-                      callback: forgotPassword,
-                    ),
-            ]),
-          )),
-        ),
-      ),
-    );
-  }
-
-  Future forgotPassword() async {
-    final email = _email.text;
-    if (_formKey.currentState?.validate() ?? false) {
-      setState(() {
-        _isLoading = true;
-      });
-      try {
-        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-        if (context.mounted) {
-          Navigator.of(context).pushNamed(forgotPasswordLoadingRoute);
-        }
-        setState(() {
-          _isLoading = false;
-        });
-      } on FirebaseAuthException catch (e) {
-        debugPrint(e.toString());
-        if (context.mounted) {
+    AuthBloc authBloc = context.read<AuthBloc>();
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state is ForgotPasswordState) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+              forgotPasswordLoadingRoute, (route) => false);
+        } else if (state is ErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Wrong email format'),
+            SnackBar(
+              content: Text(state.error),
             ),
           );
         }
-        setState(() {
-          _isLoading = false;
-        });
-      }
-      return null;
-    }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
+        ),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          color: Colors.black,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: SingleChildScrollView(
+                child: Form(
+              key: _formKey,
+              child: Column(children: [
+                LogoHeaderDescriptionWidget(
+                  header: 'Новый пароль',
+                  style: TextStyle(
+                    fontSize: 32.sp,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'NeueMachina',
+                    color: Colors.white70,
+                  ),
+                  height: 8.h,
+                ),
+                SizedBox(height: 32.h),
+                const InputLabelWidget(
+                    inputLabel: 'Нам нужна только ваша почта'),
+                SizedBox(height: 16.h),
+                InputWidget(
+                  controller: _email,
+                  inputType: TextInputType.emailAddress,
+                  hintText: 'Enter email',
+                  icon: const Icon(Icons.email),
+                ),
+                SizedBox(height: 345.h),
+                ButtonWidget(
+                  btnText: 'Далее',
+                  callback: () {
+                    final email = _email.text;
+                    authBloc.add(ForgotPasswordEvent(email));
+                  },
+                ),
+              ]),
+            )),
+          ),
+        ),
+      ),
+    );
   }
 }

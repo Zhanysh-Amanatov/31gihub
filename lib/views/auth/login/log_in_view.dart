@@ -1,10 +1,9 @@
 /*External dependencies*/
-import 'package:finik/bloc/auth/auth_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*Local dependencies*/
+import 'package:finik/bloc/auth/auth_bloc.dart';
 import 'package:finik/view_routes/routes.dart';
 import 'package:finik/views/common/button_widget.dart';
 import 'package:finik/views/common/input_label_widget.dart';
@@ -22,7 +21,6 @@ class LogInViewState extends State<LogInView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
   final _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -38,53 +36,21 @@ class LogInViewState extends State<LogInView> {
     super.dispose();
   }
 
-  Future logIn() async {
-    final email = _email.text;
-    final password = _password.text;
-    if (_formKey.currentState?.validate() ?? false) {
-      setState(() {
-        _isLoading = true;
-      });
-      try {
-        UserCredential userCredentials =
-            await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        if (userCredentials.user != null && context.mounted) {
-          Navigator.of(context).pushNamed(homeViewRoute);
-        }
-        setState(() {
-          _isLoading = false;
-        });
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'INVALID_LOGIN_CREDENTIALS' && context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Wrong email or password'),
-            ),
-          );
-          setState(() {
-            _isLoading = false;
-          });
-        }
-        return null;
-      } catch (e) {
-        debugPrint(e.toString());
-        return null;
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     AuthBloc authBloc = context.read<AuthBloc>();
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthenticationSuccess) {
+        if (state is AuthernticationSuccessState) {
           Navigator.of(context)
               .pushNamedAndRemoveUntil(homeViewRoute, (route) => false);
+        } else if (state is ErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.error),
+            ),
+          );
         }
       },
       child: Scaffold(
@@ -161,19 +127,15 @@ class LogInViewState extends State<LogInView> {
                   ),
                   // SizedBox(height: 185.h),
                   SizedBox(height: 165.h),
-                  _isLoading
-                      ? const CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Color(0xFFACF709)))
-                      : ButtonWidget(
-                          btnText: 'Далее',
-                          routeName: logInLoadingRoute,
-                          callback: () {
-                            final email = _email.text;
-                            final password = _password.text;
-                            authBloc.add(LoginEvent(email, password));
-                          },
-                        ),
+                  ButtonWidget(
+                    btnText: 'Далее',
+                    routeName: logInLoadingRoute,
+                    callback: () {
+                      final email = _email.text;
+                      final password = _password.text;
+                      authBloc.add(LoginEvent(email, password));
+                    },
+                  ),
                 ]),
               ),
             ),
