@@ -1,13 +1,15 @@
 /*External dependencies */
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 /*Local dependencies */
-import 'package:finik/views/common/drawer_list_button_widget.dart';
+import 'package:finik/bloc/auth/authentication_bloc.dart';
+import 'package:finik/screens/common/drawer_list_button_widget.dart';
 import 'package:finik/view_routes/routes.dart';
-import 'package:finik/views/common/button_widget.dart';
+import 'package:finik/screens/common/button_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -279,17 +281,23 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      ButtonWidget(
-                        bgColor: Colors.transparent,
-                        fgColor: const Color(0xFFACF709),
-                        btnText: 'Выйти',
-                        callback: () async {
-                          await FirebaseAuth.instance.signOut();
-                          if (context.mounted) {
-                            Navigator.pop(context);
+                      BlocConsumer<AuthenticationBloc, AuthenticationState>(
+                        listener: (context, state) {
+                          if (state is AuthenticationFailureState) {
                             Navigator.of(context).pushNamedAndRemoveUntil(
-                                homeViewRoute, (_) => false);
+                                initialViewRoute, (route) => false);
                           }
+                        },
+                        builder: (context, state) {
+                          return ButtonWidget(
+                            bgColor: Colors.transparent,
+                            fgColor: const Color(0xFFACF709),
+                            btnText: 'Выйти',
+                            callback: () {
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(SignOutEvent());
+                            },
+                          );
                         },
                       ),
                     ],

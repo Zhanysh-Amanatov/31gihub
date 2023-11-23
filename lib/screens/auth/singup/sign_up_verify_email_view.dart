@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+// import 'package:loading_animation_widget/loading_animation_widget.dart';
 /*Local dependencies*/
 import 'package:finik/view_routes/routes.dart';
-import 'package:finik/views/home/home_view.dart';
-import 'package:finik/views/common/button_widget.dart';
-import 'package:finik/views/common/logo_header_description_widget.dart';
+import 'package:finik/screens/home/home_view.dart';
+import 'package:finik/screens/common/button_widget.dart';
+import 'package:finik/screens/common/logo_header_description_widget.dart';
 
 class SignUpVerifyEmailView extends StatefulWidget {
   const SignUpVerifyEmailView({super.key});
@@ -109,8 +109,11 @@ class _SignUpVerifyEmailViewState extends State<SignUpVerifyEmailView> {
                   style: TextStyle(color: Colors.white70, fontSize: 16.sp),
                 ),
                 SizedBox(height: 16.h),
-                LoadingAnimationWidget.threeArchedCircle(
-                    color: const Color(0xFFACF709), size: 50),
+                const CircularProgressIndicator(
+                  color: Color(0xFFACF709),
+                ),
+                // LoadingAnimationWidget.threeArchedCircle(
+                // color: const Color(0xFFACF709), size: 50),
                 SizedBox(height: 16.h),
                 Text(
                   'Checking...',

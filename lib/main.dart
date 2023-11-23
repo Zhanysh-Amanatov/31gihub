@@ -1,24 +1,26 @@
 /*External dependencies*/
+import 'package:finik/screens/authentication_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 /*Local dependencies*/
-import 'package:finik/bloc/auth/auth_bloc.dart';
+import 'package:finik/bloc/auth/authentication_bloc.dart';
 import 'package:finik/view_routes/routes.dart';
 import 'package:finik/firebase_options.dart';
-import 'package:finik/views/home/carousel_view.dart';
-import 'package:finik/views/home/home_view.dart';
-import 'package:finik/views/auth/forgotPassword/forgot_password_loading_view.dart';
-import 'package:finik/views/auth/forgotPassword/forgot_password_view.dart';
-import 'package:finik/views/auth/singup/sign_up_verify_email_view.dart';
-import 'package:finik/views/initial_view.dart';
-import 'package:finik/views/auth/login/log_in_view.dart';
-import 'package:finik/views/auth/singup/sign_up_email_view.dart';
+import 'package:finik/screens/home/carousel_view.dart';
+import 'package:finik/screens/home/home_view.dart';
+import 'package:finik/screens/auth/forgotPassword/forgot_password_loading_view.dart';
+import 'package:finik/screens/auth/forgotPassword/forgot_password_view.dart';
+import 'package:finik/screens/auth/singup/sign_up_verify_email_view.dart';
+import 'package:finik/screens/initial_view.dart';
+import 'package:finik/screens/auth/login/log_in_view.dart';
+import 'package:finik/screens/auth/singup/sign_up_email_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const MyApp());
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
     double width = 375;
     double height = 812;
     return BlocProvider(
-      create: (context) => AuthBloc(),
+      create: (context) => AuthenticationBloc(),
       child: ScreenUtilInit(
         builder: (BuildContext context, state) => MaterialApp(
           title: 'Flutter Demo',
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
             useMaterial3: true,
           ),
-          home: const DefaultView(),
+          home: const AuthenticationFlowWidget(),
           routes: {
             logInRoute: (context) => const LogInView(),
             signUpEmailRoute: (context) => const SignUpEmailView(),
