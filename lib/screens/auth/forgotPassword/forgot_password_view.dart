@@ -66,6 +66,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               BlocConsumer<AuthenticationBloc, AuthenticationState>(
                 listener: (context, state) {
                   if (state is AuthenticationSuccessState) {
+                    print("AuthenticationSuccessState received");
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         forgotPasswordLoadingRoute, (route) => false);
                   } else if (state is AuthenticationFailureState) {
@@ -79,7 +80,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 builder: (context, state) {
                   return ButtonWidget(
                     btnText: 'Далее',
-                    callback: () {
+                    callback: () async {
                       BlocProvider.of<AuthenticationBloc>(context).add(
                         ForgotPasswordEvent(
                           emailController.text.trim(),
