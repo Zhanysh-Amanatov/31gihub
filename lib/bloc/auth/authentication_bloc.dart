@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 /*External dependencies*/
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 /*Local dependencies*/
 import 'package:finik/services/authentication.dart';

@@ -66,7 +66,6 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               BlocConsumer<AuthenticationBloc, AuthenticationState>(
                 listener: (context, state) {
                   if (state is AuthenticationSuccessState) {
-                    print("AuthenticationSuccessState received");
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         forgotPasswordLoadingRoute, (route) => false);
                   } else if (state is AuthenticationFailureState) {
