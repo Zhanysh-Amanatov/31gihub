@@ -11,7 +11,6 @@ import 'package:finik/screens/common/input_widget.dart';
 import 'package:finik/screens/common/logo_header_description_widget.dart';
 
 class SignUpEmailView extends StatefulWidget {
-  static String id = 'login_view';
   const SignUpEmailView({super.key});
 
   @override

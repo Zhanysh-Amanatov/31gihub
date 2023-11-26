@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class AuthenticationFlowWidget extends StatelessWidget {
   const AuthenticationFlowWidget({super.key});
-  static String id = 'main_view';
 
   @override
   Widget build(BuildContext context) {
