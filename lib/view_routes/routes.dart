@@ -8,5 +8,4 @@ const initialViewRoute = '/initialView';
 const forgotPasswordRoute = '/forgotPassword';
 const forgotPasswordLoadingRoute = '/forgotPasswordLoading';
 const carouselRoute = '/carouselRoute';
-// const authenticationFlowWidgetRoute = '/AuthenticationFlowWidget';
 const noRoute = '';
