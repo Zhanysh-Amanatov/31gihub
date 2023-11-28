@@ -1,14 +1,14 @@
 /*External dependencies*/
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*Local dependencies*/
 import 'package:finik/bloc/auth/authentication_bloc.dart';
-import 'package:finik/view_routes/routes.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/input_label_widget.dart';
 import 'package:finik/screens/common/input_widget.dart';
 import 'package:finik/screens/common/logo_header_description_widget.dart';
+import 'package:finik/view_routes/routes.dart';
 
 class LogInView extends StatefulWidget {
   const LogInView({super.key});

@@ -1,3 +1,4 @@
+/*External dependencies */
 import 'package:finik/screens/home/carousel_view.dart';
 import 'package:finik/screens/home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';

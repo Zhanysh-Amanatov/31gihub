@@ -1,6 +1,5 @@
 /*External dependencies*/
 import 'package:flutter/material.dart';
-/*Local dependencies*/
 
 class InputLabelWidget extends StatelessWidget {
   final String inputLabel;

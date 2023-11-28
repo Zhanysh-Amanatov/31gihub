@@ -7,9 +7,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 /*Local dependencies */
 import 'package:finik/bloc/auth/authentication_bloc.dart';
+import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/drawer_list_button_widget.dart';
 import 'package:finik/view_routes/routes.dart';
-import 'package:finik/screens/common/button_widget.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

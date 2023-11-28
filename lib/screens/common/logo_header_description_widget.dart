@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-/*Local dependencies*/
 
 class LogoHeaderDescriptionWidget extends StatelessWidget {
   final String header;

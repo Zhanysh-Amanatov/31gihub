@@ -1,5 +1,7 @@
-import 'package:finik/user.dart';
+/*External dependencies */
 import 'package:firebase_auth/firebase_auth.dart';
+/*Local dependencies */
+import 'package:finik/user.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

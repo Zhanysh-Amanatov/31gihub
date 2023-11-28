@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:loading_animation_widget/loading_animation_widget.dart';
 /*Local dependencies*/
-import 'package:finik/view_routes/routes.dart';
-import 'package:finik/screens/home/home_view.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/logo_header_description_widget.dart';
+import 'package:finik/screens/home/home_view.dart';
+import 'package:finik/view_routes/routes.dart';
 
 class SignUpVerifyEmailView extends StatefulWidget {
   const SignUpVerifyEmailView({super.key});

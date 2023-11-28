@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 /*External dependencies*/
 import 'package:flutter_bloc/flutter_bloc.dart';
 /*Local dependencies*/
