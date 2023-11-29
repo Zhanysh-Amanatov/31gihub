@@ -7,6 +7,17 @@ abstract class AuthenticationEvent {
   List<Object> get props => [];
 }
 
+class AuthenticationStarted extends AuthenticationEvent {
+  @override
+  List<Object> get props => [];
+}
+
+class AuthenticationSignedOut extends AuthenticationEvent {
+  @override
+  List<Object> get props => [];
+}
+
+// old version
 class SignUpEvent extends AuthenticationEvent {
   final String email;
   final String password;

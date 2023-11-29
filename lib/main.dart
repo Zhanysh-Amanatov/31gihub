@@ -1,4 +1,5 @@
 /*External dependencies*/
+import 'package:finik/bloc/app_bloc_observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,19 @@ import 'package:finik/view_routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(const MyApp());
+    BlocOverrides.runZoned(
+        () => runApp(
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider(create: (context) => AuthenticationBloc()),
+                ],
+                child: const MyApp(),
+              ),
+            ),
+        blocObserver: AppBlocObserver());
   });
 }
 
@@ -35,50 +45,47 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = 375;
     double height = 812;
-    return BlocProvider(
-      create: (context) => AuthenticationBloc(),
-      child: ScreenUtilInit(
-        builder: (BuildContext context, state) => MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-            useMaterial3: true,
-          ),
-          home: const AuthenticationFlowWidget(),
-          routes: {
-            logInRoute: (context) => const LogInView(),
-            signUpEmailRoute: (context) => const SignUpEmailView(),
-            signUpVerifyEmailRoute: (context) => const SignUpVerifyEmailView(),
-            homeViewRoute: (context) => const HomeView(),
-            initialViewRoute: (context) => const InitialView(),
-            forgotPasswordRoute: (context) => const ForgotPasswordView(),
-            forgotPasswordLoadingRoute: (context) =>
-                const ForgotPasswordLoadingView(),
-            carouselRoute: (context) => const CarouselView(),
-          },
+    return ScreenUtilInit(
+      builder: (BuildContext context, state) => MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
+          useMaterial3: true,
         ),
-        designSize: Size(width, height),
+        home: const AuthenticationFlowWidget(),
+        routes: {
+          logInRoute: (context) => const LogInView(),
+          signUpEmailRoute: (context) => const SignUpEmailView(),
+          signUpVerifyEmailRoute: (context) => const SignUpVerifyEmailView(),
+          homeViewRoute: (context) => const HomeView(),
+          initialViewRoute: (context) => const InitialView(),
+          forgotPasswordRoute: (context) => const ForgotPasswordView(),
+          forgotPasswordLoadingRoute: (context) =>
+              const ForgotPasswordLoadingView(),
+          carouselRoute: (context) => const CarouselView(),
+        },
       ),
+      designSize: Size(width, height),
     );
   }
 }
 
-class DefaultView extends StatelessWidget {
-  const DefaultView({super.key});
+// class DefaultView extends StatelessWidget {
+//   const DefaultView({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform),
-      builder: (context, snapshot) {
-        switch (snapshot.connectionState) {
-          case ConnectionState.done:
-            return const CarouselView();
-          default:
-            return const InitialView();
-        }
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return FutureBuilder(
+//       future: Firebase.initializeApp(
+//           options: DefaultFirebaseOptions.currentPlatform),
+//       builder: (context, snapshot) {
+//         switch (snapshot.connectionState) {
+//           case ConnectionState.done:
+//             return const CarouselView();
+//           default:
+//             return const InitialView();
+//         }
+//       },
+//     );
+//   }
+// }

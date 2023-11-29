@@ -6,6 +6,25 @@ abstract class AuthenticationState {
   List props = const [];
 }
 
+class AuthenticationInitial extends AuthenticationState {
+  @override
+  List<Object> get props => [];
+}
+
+class AuthenticationSuccess extends AuthenticationState {
+  final String? displayName;
+  AuthenticationSuccess({this.displayName});
+
+  @override
+  List<Object?> get props => [displayName];
+}
+
+class AuthenticationFailure extends AuthenticationState {
+  @override
+  List<Object?> get props => [];
+}
+
+// old version
 class AuthenticationInitialState extends AuthenticationState {
   @override
   List<Object?> get props => [];
