@@ -38,7 +38,7 @@ class InitialView extends StatelessWidget {
           ButtonWidget(
             btnText: 'Войти в аккаунт',
             routeName: logInRoute,
-            callback: () => Navigator.of(context).pushNamed(logInRoute),
+            onPressed: () => Navigator.of(context).pushNamed(logInRoute),
           ),
           SizedBox(height: 10.h),
           ButtonWidget(
@@ -46,7 +46,7 @@ class InitialView extends StatelessWidget {
             routeName: signUpEmailRoute,
             fgColor: const Color(0xFFACF709),
             bgColor: const Color(0xFF222222),
-            callback: () => Navigator.of(context).pushNamed(signUpEmailRoute),
+            onPressed: () => Navigator.of(context).pushNamed(signUpEmailRoute),
           ),
         ]),
       ),

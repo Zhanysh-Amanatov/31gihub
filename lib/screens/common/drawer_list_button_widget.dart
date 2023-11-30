@@ -5,18 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 
 class DrawerListButtonWidget extends StatelessWidget {
   final String btnText;
-  final VoidCallback? callback;
+  final VoidCallback? onPressed;
 
   const DrawerListButtonWidget({
     super.key,
     required this.btnText,
-    this.callback,
+    this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: callback,
+      onPressed: onPressed,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text(btnText,
             style: GoogleFonts.inter(

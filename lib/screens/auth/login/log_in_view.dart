@@ -125,7 +125,7 @@ class LogInViewState extends State<LogInView> {
                         : ButtonWidget(
                             btnText: 'Далее',
                             routeName: logInLoadingRoute,
-                            callback: () {
+                            onPressed: () {
                               BlocProvider.of<AuthenticationBloc>(context).add(
                                 LoginEvent(
                                   emailController.text.trim(),

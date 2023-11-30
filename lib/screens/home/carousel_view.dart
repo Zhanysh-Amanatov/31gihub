@@ -177,7 +177,7 @@ class _CarouselViewState extends State<CarouselView> {
                           ButtonWidget(
                             btnText: 'Супер',
                             bgColor: const Color(0xFFD7F863),
-                            callback: () {
+                            onPressed: () {
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                   homeViewRoute, (route) => false);
                             },
@@ -189,7 +189,7 @@ class _CarouselViewState extends State<CarouselView> {
                           ButtonWidget(
                             btnText: 'Далее',
                             bgColor: const Color(0xFFD7F863),
-                            callback: () {
+                            onPressed: () {
                               if (currentPage < items.length - 1) {
                                 _pageController.animateToPage(
                                   currentPage + 1,
@@ -204,7 +204,7 @@ class _CarouselViewState extends State<CarouselView> {
                             btnText: 'Пропустить',
                             bgColor: const Color(0xFF222222),
                             fgColor: Colors.white,
-                            callback: () {
+                            onPressed: () {
                               Navigator.of(context).pushNamedAndRemoveUntil(
                                   homeViewRoute, (route) => false);
                             },

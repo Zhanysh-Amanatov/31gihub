@@ -79,7 +79,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 builder: (context, state) {
                   return ButtonWidget(
                     btnText: 'Далее',
-                    callback: () async {
+                    onPressed: () async {
                       BlocProvider.of<AuthenticationBloc>(context).add(
                         ForgotPasswordEvent(
                           emailController.text.trim(),

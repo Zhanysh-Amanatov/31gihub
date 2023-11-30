@@ -1,12 +1,16 @@
 /*External dependencies*/
-import 'package:finik/bloc/app_bloc_observer.dart';
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
 /*Local dependencies*/
+import 'package:finik/bloc/app_bloc_observer.dart';
 import 'package:finik/bloc/auth/authentication_bloc.dart';
+import 'package:finik/bloc/database/database_bloc.dart';
+import 'package:finik/bloc/formBloc/form_bloc.dart';
 import 'package:finik/firebase_options.dart';
 import 'package:finik/screens/auth/forgotPassword/forgot_password_loading_view.dart';
 import 'package:finik/screens/auth/forgotPassword/forgot_password_view.dart';
@@ -17,24 +21,40 @@ import 'package:finik/screens/authentication_page.dart';
 import 'package:finik/screens/home/carousel_view.dart';
 import 'package:finik/screens/home/home_view.dart';
 import 'package:finik/screens/initial_view.dart';
+import 'package:finik/services/authentication_repository.dart';
+import 'package:finik/services/database_repository.dart';
 import 'package:finik/view_routes/routes.dart';
 
 void main() async {
+  // runZonedGuarded<Future<void>>(() async {
+
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    BlocOverrides.runZoned(
-        () => runApp(
-              MultiBlocProvider(
-                providers: [
-                  BlocProvider(create: (context) => AuthenticationBloc()),
-                ],
-                child: const MyApp(),
-              ),
-            ),
-        blocObserver: AppBlocObserver());
-  });
+  await Firebase.initializeApp();
+  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+  //     .then((_) {});
+  Bloc.observer = AppBlocObserver();
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              AuthenticationBloc(AuthenticationRepositoryImpl())
+                ..add(AuthenticationStarted()),
+        ),
+        BlocProvider(
+          create: (context) => FormBloc(
+              AuthenticationRepositoryImpl(), DatabaseRepositoryImpl()),
+        ),
+        BlocProvider(
+          create: (context) => DatabaseBloc(DatabaseRepositoryImpl()),
+        )
+      ],
+      child: const MyApp(),
+    ),
+  );
+  // blocObserver: AppBlocObserver();
+  // });
 }
 
 class MyApp extends StatelessWidget {

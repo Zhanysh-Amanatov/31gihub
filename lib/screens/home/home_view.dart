@@ -119,7 +119,7 @@ class _HomeViewState extends State<HomeView> {
                       SizedBox(height: 16.h),
                       ButtonWidget(
                         btnText: 'Войти',
-                        callback: () {
+                        onPressed: () {
                           Navigator.pop(context);
                           Navigator.of(context).pushNamed(initialViewRoute);
                         },
@@ -293,7 +293,7 @@ class _HomeViewState extends State<HomeView> {
                             bgColor: Colors.transparent,
                             fgColor: const Color(0xFFACF709),
                             btnText: 'Выйти',
-                            callback: () {
+                            onPressed: () {
                               BlocProvider.of<AuthenticationBloc>(context)
                                   .add(SignOutEvent());
                             },

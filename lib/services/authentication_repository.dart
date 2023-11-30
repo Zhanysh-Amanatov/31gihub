@@ -1,12 +1,13 @@
 /*External dependencies*/
+import 'package:finik/services/database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 /*Local dependencies */
-import 'package:finik/services/authentication.dart';
+import 'package:finik/services/authentication_service.dart';
 import 'package:finik/user.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationService service = AuthenticationService();
-  // DatabaseService dbService = DatabaseService();
+  DatabaseService dbService = DatabaseService();
 
   @override
   Stream<UserModel> getCurrentUser() {
@@ -36,10 +37,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     return service.signOut();
   }
 
-  // @override
-  // Future<String?> retrieveUserName(UserModel user) {
-  //   return dbService.retrieveUserName(user);
-  // }
+  @override
+  Future<String?> retrieveUserName(UserModel user) {
+    return dbService.retrieveUserName(user);
+  }
 }
 
 abstract class AuthenticationRepository {
@@ -47,5 +48,5 @@ abstract class AuthenticationRepository {
   Future<UserCredential?> signUp(UserModel user);
   Future<UserCredential?> signIn(UserModel user);
   Future<void> signOut();
-  // Future<String?> retrieveUserName(UserModel user);
+  Future<String?> retrieveUserName(UserModel user);
 }

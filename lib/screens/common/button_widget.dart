@@ -7,13 +7,13 @@ class ButtonWidget extends StatelessWidget {
   final Color bgColor;
   final Color fgColor;
   final String? routeName;
-  final VoidCallback? callback;
+  final VoidCallback? onPressed;
 
   const ButtonWidget({
     super.key,
     required this.btnText,
     this.routeName,
-    this.callback,
+    this.onPressed,
     this.fgColor = const Color(0xFF222222),
     this.bgColor = const Color(0xFFACF709),
   });
@@ -40,7 +40,7 @@ class ButtonWidget extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: callback,
+        onPressed: onPressed,
         child: Text(btnText),
       ),
     );

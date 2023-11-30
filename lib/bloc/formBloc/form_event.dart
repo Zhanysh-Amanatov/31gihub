@@ -33,14 +33,6 @@ class NameChanged extends FormEvent {
   List<Object> get props => [displayName];
 }
 
-class AgeChanged extends FormEvent {
-  final int age;
-  const AgeChanged(this.age);
-
-  @override
-  List<Object> get props => [age];
-}
-
 class FormSubmitted extends FormEvent {
   final Status value;
   const FormSubmitted({required this.value});

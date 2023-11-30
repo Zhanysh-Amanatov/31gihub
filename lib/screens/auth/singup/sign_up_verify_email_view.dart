@@ -123,12 +123,12 @@ class _SignUpVerifyEmailViewState extends State<SignUpVerifyEmailView> {
                 SizedBox(height: 230.h),
                 ButtonWidget(
                   btnText: 'Resend email',
-                  callback: sendVerificationEmail,
+                  onPressed: sendVerificationEmail,
                 ),
                 SizedBox(height: 10.h),
                 ButtonWidget(
                   btnText: 'Cancel',
-                  callback: cancel,
+                  onPressed: cancel,
                   bgColor: const Color(0xFF222222),
                   fgColor: const Color(0xFFACF709),
                 )

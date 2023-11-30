@@ -42,7 +42,7 @@ class ForgotPasswordLoadingView extends StatelessWidget {
             SizedBox(height: 385.h),
             ButtonWidget(
               btnText: 'Войти',
-              callback: () => Navigator.of(context).pushNamed(logInRoute),
+              onPressed: () => Navigator.of(context).pushNamed(logInRoute),
             ),
           ]),
         ),
