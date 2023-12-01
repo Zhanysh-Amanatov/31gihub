@@ -71,45 +71,45 @@ class SignUpEmailView extends StatelessWidget {
                   // const InputLabelWidget(
                   //     inputLabel: 'Нам нужна только ваша почта'),
                   SizedBox(height: 16.h),
-                  const _EmailField(),
-                  // BlocBuilder<FormBloc, FormsValidate>(
-                  //   builder: (context, state) {
-                  //     return InputWidget(
-                  //       inputType: TextInputType.emailAddress,
-                  //       hintText: 'Enter email',
-                  //       icon: const Icon(Icons.email),
-                  //       onChanged: (value) {
-                  //         context.read()<FormBloc>().add(EmailChanged(value));
-                  //       },
-                  //       labelText: 'Email',
-                  //       helperText:
-                  //           'A complete, valid email e.g. joe@gmail.com',
-                  //       errorText: !state.isEmailValid
-                  //           ? 'Please ensure the email entered is valid'
-                  //           : null,
-                  //     );
-                  //   },
-                  // ),
+                  // const _EmailField(),
+                  BlocBuilder<FormBloc, FormsValidate>(
+                    builder: (context, state) {
+                      return InputWidget(
+                        inputType: TextInputType.emailAddress,
+                        hintText: 'Enter email',
+                        icon: const Icon(Icons.email),
+                        onChanged: (value) {
+                          context.read()<FormBloc>().add(EmailChanged(value));
+                        },
+                        labelText: 'Email',
+                        helperText:
+                            'A complete, valid email e.g. joe@gmail.com',
+                        errorText: !state.isEmailValid
+                            ? 'Please ensure the email entered is valid'
+                            : null,
+                      );
+                    },
+                  ),
                   SizedBox(height: 16.h),
                   // const InputLabelWidget(inputLabel: 'Введите пароль'),
                   SizedBox(height: 16.h),
-                  const _PasswordField(),
-                  // BlocBuilder<FormBloc, FormsValidate>(
-                  //   builder: (context, state) {
-                  //     return InputWidget(
-                  //       isObscure: true,
-                  //       hintText: 'Enter password',
-                  //       icon: const Icon(Icons.password),
-                  //       onChanged: (value) {
-                  //         context.read<FormBloc>().add(PasswordChanged(value));
-                  //       },
-                  //       labelText: 'Password',
-                  //       errorText: !state.isPasswordValid
-                  //           ? '''Password must be at least 8 characters and contain at least one letter and number'''
-                  //           : null,
-                  //     );
-                  //   },
-                  // ),
+                  // const _PasswordField(),
+                  BlocBuilder<FormBloc, FormsValidate>(
+                    builder: (context, state) {
+                      return InputWidget(
+                        isObscure: true,
+                        hintText: 'Enter password',
+                        icon: const Icon(Icons.password),
+                        onChanged: (value) {
+                          context.read<FormBloc>().add(PasswordChanged(value));
+                        },
+                        labelText: 'Password',
+                        errorText: !state.isPasswordValid
+                            ? '''Password must be at least 8 characters and contain at least one letter and number'''
+                            : null,
+                      );
+                    },
+                  ),
                   SizedBox(height: 250.h),
                   BlocBuilder<FormBloc, FormsValidate>(
                     builder: (context, state) {
