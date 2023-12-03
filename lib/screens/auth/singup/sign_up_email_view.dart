@@ -118,7 +118,6 @@ class SignUpEmailView extends StatelessWidget {
                           : ButtonWidget(
                               btnText: 'Далее',
                               onPressed: () {
-                                print('clicked');
                                 state.isFormValid
                                     ? () => context.read<FormBloc>().add(
                                         const FormSubmitted(
