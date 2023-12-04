@@ -1,58 +1,25 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class UserModel {
-  String? uid;
-  bool? isVerified;
-  final String? email;
-  String? password;
-  final String? displayName;
-
-  UserModel({
-    this.uid,
-    this.isVerified,
+class User extends Equatable {
+  const User({
+    required this.id,
     this.email,
-    this.password,
-    this.displayName,
+    this.name,
+    this.photo,
   });
+  final String? email;
+  final String? id;
+  final String? name;
+  final String? photo;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'email': email,
-      'displayName': displayName,
-    };
-  }
+  static const empty = User(id: '');
 
-  UserModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
-      : uid = doc.id,
-        email = doc.data()!["email"],
-        displayName = doc.data()!["displayName"];
+// Convenience getter to determine whether the current user is empty.
+  bool get isEmpty => this == User.empty;
 
-  UserModel copyWith({
-    bool? isVerified,
-    String? uid,
-    String? email,
-    String? password,
-    String? displayName,
-  }) {
-    return UserModel(
-        uid: uid ?? this.uid,
-        email: email ?? this.email,
-        password: password ?? this.password,
-        displayName: displayName ?? this.displayName,
-        isVerified: isVerified ?? this.isVerified);
-  }
+// Convenience getter to determine whether the current user is not empty.
+  bool get isNotEmpty => this != User.empty;
+
+  @override
+  List<Object?> get props => [id, email, name, photo];
 }
-
-// class UserModel {
-//   final String? id;
-//   final String? email;
-//   final String? displayName;
-
-//   UserModel({
-//     this.id,
-//     this.email,
-//     this.displayName,
-//   });
-// }
-
-

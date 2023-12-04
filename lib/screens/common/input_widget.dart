@@ -29,7 +29,7 @@ class InputWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 343.w,
+      // width: 343.w,
       // height: 48.h,
       child: TextFormField(
         obscureText: isObscure,
@@ -66,11 +66,11 @@ class InputWidget extends StatelessWidget {
           // focusedBorder: const OutlineInputBorder(
           // borderSide: BorderSide(color: Color(0xFF222222), width: 1),
           // ),
-          // hintStyle: TextStyle(
-          //   fontSize: 14.sp,
-          //   fontWeight: FontWeight.w700,
-          //   color: const Color(0xFFFFFFFF),
-          // ),
+          hintStyle: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFFFFFFFF),
+          ),
           prefixIcon: icon,
           iconColor: const Color(0xFF929BA9),
         ),

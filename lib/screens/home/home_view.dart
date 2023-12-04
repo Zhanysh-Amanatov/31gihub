@@ -1,4 +1,5 @@
 /*External dependencies */
+import 'package:finik/bloc/app_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,13 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 /*Local dependencies */
-import 'package:finik/bloc/auth/authentication_bloc.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/drawer_list_button_widget.dart';
 import 'package:finik/view_routes/routes.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
+  static Page<void> page() => const MaterialPage<void>(child: HomeView());
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -24,6 +25,7 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.select((AppBloc bloc) => bloc.state.user);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -156,7 +158,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                               SizedBox(width: 4.w),
                               Text(
-                                'test@gmail.com',
+                                user.email ?? '',
                                 style: GoogleFonts.inter(
                                   textStyle: TextStyle(
                                     color: Colors.white70,
@@ -281,25 +283,16 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      BlocConsumer<AuthenticationBloc, AuthenticationState>(
-                        listener: (context, state) {
-                          if (state is AuthenticationFailureState) {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                initialViewRoute, (route) => false);
-                          }
+                      ButtonWidget(
+                        bgColor: Colors.transparent,
+                        fgColor: const Color(0xFFACF709),
+                        btnText: 'Выйти',
+                        onPressed: () {
+                          context
+                              .read<AppBloc>()
+                              .add(const AppLogoutRequested());
                         },
-                        builder: (context, state) {
-                          return ButtonWidget(
-                            bgColor: Colors.transparent,
-                            fgColor: const Color(0xFFACF709),
-                            btnText: 'Выйти',
-                            onPressed: () {
-                              BlocProvider.of<AuthenticationBloc>(context)
-                                  .add(SignOutEvent());
-                            },
-                          );
-                        },
-                      ),
+                      )
                     ],
                   )
               ],

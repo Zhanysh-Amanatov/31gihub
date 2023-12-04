@@ -1,4 +1,5 @@
 /*External dependencies */
+import 'package:finik/screens/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:chewie/chewie.dart';
@@ -26,6 +27,7 @@ class MyItem {
 
 class CarouselView extends StatefulWidget {
   const CarouselView({super.key});
+  static Page<void> page() => const MaterialPage<void>(child: CarouselView());
 
   @override
   State<CarouselView> createState() => _CarouselViewState();
@@ -218,8 +220,12 @@ class _CarouselViewState extends State<CarouselView> {
               right: 20.w,
               child: IconButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(homeViewRoute, (route) => false);
+                  // Navigator.of(context)
+                  //     .pushNamedAndRemoveUntil(homeViewRoute, (route) => false);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomeView()),
+                  );
                 },
                 icon: const Icon(
                   Icons.close,

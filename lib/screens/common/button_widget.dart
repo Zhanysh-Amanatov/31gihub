@@ -6,17 +6,18 @@ class ButtonWidget extends StatelessWidget {
   final String btnText;
   final Color bgColor;
   final Color fgColor;
+  final Key? btnKey;
   final String? routeName;
   final VoidCallback? onPressed;
 
-  const ButtonWidget({
-    super.key,
-    required this.btnText,
-    this.routeName,
-    this.onPressed,
-    this.fgColor = const Color(0xFF222222),
-    this.bgColor = const Color(0xFFACF709),
-  });
+  const ButtonWidget(
+      {super.key,
+      required this.btnText,
+      this.routeName,
+      this.onPressed,
+      this.fgColor = const Color(0xFF222222),
+      this.bgColor = const Color(0xFFACF709),
+      this.btnKey});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class ButtonWidget extends StatelessWidget {
       width: 343.w,
       height: 52.h,
       child: TextButton(
+        key: key,
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(bgColor),
           foregroundColor: MaterialStateProperty.all(fgColor),

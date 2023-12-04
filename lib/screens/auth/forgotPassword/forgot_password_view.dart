@@ -1,14 +1,11 @@
 /*External dependencies */
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*Local dependencies */
-import 'package:finik/bloc/auth/authentication_bloc.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/input_label_widget.dart';
 import 'package:finik/screens/common/input_widget.dart';
 import 'package:finik/screens/common/logo_header_description_widget.dart';
-import 'package:finik/view_routes/routes.dart';
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({super.key});
@@ -63,32 +60,9 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 icon: const Icon(Icons.email),
               ),
               SizedBox(height: 345.h),
-              BlocConsumer<AuthenticationBloc, AuthenticationState>(
-                listener: (context, state) {
-                  if (state is AuthenticationSuccessState) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        forgotPasswordLoadingRoute, (route) => false);
-                  } else if (state is AuthenticationFailureState) {
-                    ScaffoldMessenger(
-                      child: SnackBar(
-                        content: Text(state.errorMessage),
-                      ),
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return ButtonWidget(
-                    btnText: 'Далее',
-                    onPressed: () async {
-                      BlocProvider.of<AuthenticationBloc>(context).add(
-                        ForgotPasswordEvent(
-                          emailController.text.trim(),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+              ButtonWidget(
+                btnText: 'Далее',
+              )
             ]),
           )),
         ),
