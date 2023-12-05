@@ -1,18 +1,17 @@
 /*External dependencies*/
-import 'package:finik/screens/auth/login/cubit/login_cubit.dart';
-import 'package:finik/screens/common/button_widget.dart';
-import 'package:finik/screens/common/input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*Local dependencies*/
+import 'package:finik/screens/auth/login/cubit/login_cubit.dart';
+import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/input_label_widget.dart';
+import 'package:finik/screens/common/input_widget.dart';
 import 'package:finik/screens/common/logo_header_description_widget.dart';
-import 'package:finik/view_routes/routes.dart';
 import 'package:formz/formz.dart';
 
-class LogInView extends StatelessWidget {
-  const LogInView({super.key});
+class LoginForm extends StatelessWidget {
+  const LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +36,7 @@ class LogInView extends StatelessWidget {
           // height: double.infinity,
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          color: Color.fromARGB(255, 0, 0, 0),
+          color: const Color.fromARGB(255, 0, 0, 0),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: SingleChildScrollView(
@@ -117,7 +116,7 @@ class LogInView extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(forgotPasswordRoute);
+                        // Navigator.of(context).pushNamed(forgotPasswordRoute);
                       },
                       child: const Text(
                         'Забыл пароль?',
@@ -129,17 +128,29 @@ class LogInView extends StatelessWidget {
                   BlocBuilder<LoginCubit, LoginState>(
                       builder: (context, state) {
                     return state.status.isInProgress
-                        ? const CircularProgressIndicator()
+                        ? const CircularProgressIndicator(
+                            color: Color(0xFFACF709),
+                          )
                         : ButtonWidget(
                             key: const Key('loginForm_continue_raisedButton'),
                             btnText: 'Далее',
-                            routeName: logInLoadingRoute,
-                            onPressed: state.isValid
-                                ? () => context
+                            // routeName: logInLoadingRoute,
+                            onPressed: () {
+                              print('clicked');
+                              if (state.isValid) {
+                                context
                                     .read<LoginCubit>()
-                                    .logInWithCredentials()
-                                : null,
-                          );
+                                    .logInWithCredentials();
+                              } else {
+                                null;
+                              }
+                            }
+                            // state.isValid
+                            //     ? () => context
+                            //         .read<LoginCubit>()
+                            //         .logInWithCredentials()
+                            //     : null,
+                            );
                   })
                 ]),
               ),

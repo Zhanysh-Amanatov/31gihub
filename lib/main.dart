@@ -1,10 +1,11 @@
 /*External dependencies*/
 import 'package:finik/bloc/app_bloc.dart';
+import 'package:finik/bloc_observer.dart';
 import 'package:finik/repository/authentication_repository.dart';
 import 'package:finik/screens/auth/forgotPassword/forgot_password_loading_view.dart';
 import 'package:finik/screens/auth/forgotPassword/forgot_password_view.dart';
-import 'package:finik/screens/auth/login/log_in_view.dart';
-import 'package:finik/screens/auth/singup/sign_up_email_view.dart';
+import 'package:finik/screens/auth/login/log_in_form.dart';
+import 'package:finik/screens/auth/singup/sign_up_form.dart';
 import 'package:finik/screens/auth/singup/sign_up_verify_email_view.dart';
 import 'package:finik/screens/home/carousel_view.dart';
 import 'package:finik/screens/home/home_view.dart';
@@ -31,6 +32,8 @@ import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = const AppBlocObserver();
+
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {});
@@ -78,8 +81,8 @@ class AppView extends StatelessWidget {
             onGeneratePages: onGenerateAppViewPages,
           ),
           routes: {
-            logInRoute: (context) => const LogInView(),
-            signUpEmailRoute: (context) => const SignUpEmailView(),
+            logInRoute: (context) => const LoginForm(),
+            signUpEmailRoute: (context) => const SignUpForm(),
             signUpVerifyEmailRoute: (context) => const SignUpVerifyEmailView(),
             homeViewRoute: (context) => const HomeView(),
             initialViewRoute: (context) => const InitialView(),
@@ -116,8 +119,8 @@ class AppView extends StatelessWidget {
 //         ),
 //         home: const AppView(),
 //         routes: {
-//           logInRoute: (context) => const LogInView(),
-//           signUpEmailRoute: (context) => const SignUpEmailView(),
+//           logInRoute: (context) => const LoginForm(),
+//           signUpEmailRoute: (context) => const SignUpForm(),
 //           signUpVerifyEmailRoute: (context) => const SignUpVerifyEmailView(),
 //           homeViewRoute: (context) => const HomeView(),
 //           initialViewRoute: (context) => const InitialView(),

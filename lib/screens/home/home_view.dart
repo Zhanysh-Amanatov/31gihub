@@ -1,5 +1,6 @@
 /*External dependencies */
 import 'package:finik/bloc/app_bloc.dart';
+import 'package:finik/screens/initial_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -123,7 +124,11 @@ class _HomeViewState extends State<HomeView> {
                         btnText: 'Войти',
                         onPressed: () {
                           Navigator.pop(context);
-                          Navigator.of(context).pushNamed(initialViewRoute);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const InitialView(),
+                              ));
                         },
                       ),
                     ],
