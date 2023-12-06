@@ -1,12 +1,11 @@
 /*External dependencies */
-import 'package:finik/screens/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
 /*Local dependencies */
 import 'package:finik/screens/common/button_widget.dart';
-import 'package:finik/view_routes/routes.dart';
+import 'package:finik/screens/home/home_view.dart';
 
 class MyItem {
   String path;
@@ -180,8 +179,11 @@ class _CarouselViewState extends State<CarouselView> {
                             btnText: 'Супер',
                             bgColor: const Color(0xFFD7F863),
                             onPressed: () {
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  homeViewRoute, (route) => false);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeView()),
+                              );
                             },
                           ),
                         ],
@@ -207,8 +209,11 @@ class _CarouselViewState extends State<CarouselView> {
                             bgColor: const Color(0xFF222222),
                             fgColor: Colors.white,
                             onPressed: () {
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  homeViewRoute, (route) => false);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeView()),
+                              );
                             },
                           ),
                         ],

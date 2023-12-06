@@ -72,6 +72,7 @@ class AppView extends StatelessWidget {
     double width = 375;
     double height = 812;
     final appStatus = context.select((AppBloc bloc) => bloc.state.status);
+
     return ScreenUtilInit(
       builder: (BuildContext context, state) {
         return MaterialApp(

@@ -125,10 +125,11 @@ class _HomeViewState extends State<HomeView> {
                         onPressed: () {
                           Navigator.pop(context);
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const InitialView(),
-                              ));
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const InitialView(),
+                            ),
+                          );
                         },
                       ),
                     ],

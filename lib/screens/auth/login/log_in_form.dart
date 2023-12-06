@@ -82,24 +82,25 @@ class LoginForm extends StatelessWidget {
                   SizedBox(height: 16.h),
                   // _PasswordInput(),
                   BlocBuilder<LoginCubit, LoginState>(
-                      buildWhen: (previous, current) =>
-                          previous.email != current.email,
-                      builder: (context, state) {
-                        return InputWidget(
-                          inputType: TextInputType.visiblePassword,
-                          hintText: 'Enter password',
-                          icon: const Icon(Icons.password),
-                          isObscure: true,
-                          labelText: 'password',
-                          key: const Key('loginForm_passwordInput_textField'),
-                          errorText: state.password.displayError != null
-                              ? 'invalid password'
-                              : null,
-                          onChanged: (password) => context
-                              .read<LoginCubit>()
-                              .passwordChanged(password),
-                        );
-                      }),
+                    buildWhen: (previous, current) =>
+                        previous.email != current.email,
+                    builder: (context, state) {
+                      return InputWidget(
+                        inputType: TextInputType.visiblePassword,
+                        hintText: 'Enter password',
+                        icon: const Icon(Icons.password),
+                        isObscure: true,
+                        labelText: 'password',
+                        key: const Key('loginForm_passwordInput_textField'),
+                        errorText: state.password.displayError != null
+                            ? 'invalid password'
+                            : null,
+                        onChanged: (password) => context
+                            .read<LoginCubit>()
+                            .passwordChanged(password),
+                      );
+                    },
+                  ),
                   SizedBox(height: 16.h),
                   Align(
                     alignment: Alignment.centerLeft,
@@ -123,7 +124,7 @@ class LoginForm extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 190.h),
+                  SizedBox(height: 250.h),
                   // _LoginButton(),
                   BlocBuilder<LoginCubit, LoginState>(
                       builder: (context, state) {
@@ -144,13 +145,7 @@ class LoginForm extends StatelessWidget {
                               } else {
                                 null;
                               }
-                            }
-                            // state.isValid
-                            //     ? () => context
-                            //         .read<LoginCubit>()
-                            //         .logInWithCredentials()
-                            //     : null,
-                            );
+                            });
                   })
                 ]),
               ),

@@ -1,4 +1,6 @@
 /*External dependencies*/
+import 'package:finik/screens/auth/login/log_in_page.dart';
+import 'package:finik/screens/auth/singup/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*Local dependencies*/
@@ -37,8 +39,14 @@ class InitialView extends StatelessWidget {
           SizedBox(height: 24.h),
           ButtonWidget(
             btnText: 'Войти в аккаунт',
-            routeName: logInRoute,
-            onPressed: () => Navigator.of(context).pushNamed(logInRoute),
+            // routeName: logInRoute,
+            // onPressed: () => Navigator.of(context).pushNamed(logInRoute),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
+              ),
+            ),
           ),
           SizedBox(height: 10.h),
           ButtonWidget(
@@ -46,7 +54,13 @@ class InitialView extends StatelessWidget {
             routeName: signUpEmailRoute,
             fgColor: const Color(0xFFACF709),
             bgColor: const Color(0xFF222222),
-            onPressed: () => Navigator.of(context).pushNamed(signUpEmailRoute),
+            // onPressed: () => Navigator.of(context).pushNamed(signUpEmailRoute),
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SignUpPage(),
+              ),
+            ),
           ),
         ]),
       ),
