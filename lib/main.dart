@@ -1,4 +1,11 @@
 /*External dependencies*/
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flow_builder/flow_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/services.dart';
+/*Local dependencies*/
 import 'package:finik/bloc/app_bloc.dart';
 import 'package:finik/bloc_observer.dart';
 import 'package:finik/repository/authentication_repository.dart';
@@ -12,23 +19,6 @@ import 'package:finik/screens/home/home_view.dart';
 import 'package:finik/screens/initial_view.dart';
 import 'package:finik/theme.dart';
 import 'package:finik/view_routes/routes.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flow_builder/flow_builder.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter/services.dart';
-/*Local dependencies*/
-// import 'package:finik/firebase_options.dart';
-// import 'package:finik/screens/auth/forgotPassword/forgot_password_loading_view.dart';
-// import 'package:finik/screens/auth/forgotPassword/forgot_password_view.dart';
-// import 'package:finik/screens/auth/login/log_in_view.dart';
-// import 'package:finik/screens/auth/singup/sign_up_email_view.dart';
-// import 'package:finik/screens/auth/singup/sign_up_verify_email_view.dart';
-// import 'package:finik/screens/home/carousel_view.dart';
-// import 'package:finik/screens/home/home_view.dart';
-// import 'package:finik/screens/initial_view.dart';
-// import 'package:finik/view_routes/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

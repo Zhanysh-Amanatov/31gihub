@@ -1,4 +1,5 @@
 /*External dependencies */
+import 'package:finik/screens/auth/login/log_in_page.dart';
 import 'package:flutter/material.dart';
 /*Local dependencies */
 import 'package:finik/bloc/app_bloc.dart';
@@ -25,6 +26,6 @@ List<Page<dynamic>> onGenerateAppViewPages(
     case AppStatus.authenticated:
       return [HomeView.page()];
     case AppStatus.unauthenticated:
-      return [CarouselView.page()];
+      return [LoginPage.page()];
   }
 }
