@@ -1,9 +1,8 @@
 /*External dependencies */
-import 'package:finik/screens/auth/login/log_in_page.dart';
 import 'package:flutter/material.dart';
 /*Local dependencies */
 import 'package:finik/bloc/app_bloc.dart';
-import 'package:finik/screens/home/carousel_view.dart';
+import 'package:finik/screens/auth/login/log_in_page.dart';
 import 'package:finik/screens/home/home_view.dart';
 
 const logInRoute = '/logIn';

@@ -1,16 +1,15 @@
 /*External dependencies */
-import 'package:finik/bloc/app_bloc.dart';
-import 'package:finik/screens/initial_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 /*Local dependencies */
+import 'package:finik/bloc/app_bloc.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/drawer_list_button_widget.dart';
-import 'package:finik/view_routes/routes.dart';
+import 'package:finik/screens/initial_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
