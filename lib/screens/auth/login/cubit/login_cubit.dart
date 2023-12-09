@@ -1,9 +1,11 @@
+/*External dependencies */
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:formz/formz.dart';
+/*Local dependencies */
 import 'package:finik/form_models/email.dart';
 import 'package:finik/form_models/password.dart';
 import 'package:finik/repository/authentication_repository.dart';
-import 'package:formz/formz.dart';
 
 part 'login_state.dart';
 
