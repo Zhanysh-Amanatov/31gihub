@@ -1,12 +1,10 @@
 /*External dependencies */
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 /*Local dependencies */
-import 'package:finik/bloc/app_bloc.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/drawer_list_button_widget.dart';
 import 'package:finik/screens/initial_view.dart';
@@ -25,7 +23,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final user = context.select((AppBloc bloc) => bloc.state.user);
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -162,16 +159,16 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ),
                               SizedBox(width: 4.w),
-                              Text(
-                                user.email ?? '',
-                                style: GoogleFonts.inter(
-                                  textStyle: TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              )
+                              // Text(
+                              //   user.email ?? '',
+                              //   style: GoogleFonts.inter(
+                              //     textStyle: TextStyle(
+                              //       color: Colors.white70,
+                              //       fontSize: 14.sp,
+                              //       fontWeight: FontWeight.w500,
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                         ],
@@ -288,15 +285,15 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      ButtonWidget(
+                      const ButtonWidget(
                         bgColor: Colors.transparent,
                         fgColor: const Color(0xFFACF709),
                         btnText: 'Выйти',
-                        onPressed: () {
-                          context
-                              .read<AppBloc>()
-                              .add(const AppLogoutRequested());
-                        },
+                        // onPressed: () {
+                        //   context
+                        //       .read<AppBloc>()
+                        //       .add(const AppLogoutRequested());
+                        // },
                       )
                     ],
                   )
