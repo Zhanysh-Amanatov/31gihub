@@ -32,6 +32,7 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+# default settings
   target 'RunnerTests' do
     inherit! :search_paths
   end
@@ -42,3 +43,45 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 end
+
+# target 'OneSignalNotificationServiceExtension' do
+#   use_frameworks!
+#   pod 'OneSignalXCFramework', '3.2.1'
+# end
+
+# post_install do |installer|
+#   puts 'Determining pod project minimal deployment target'
+#   pods_project = installer.pods_project
+#   deployment_target_key = 'IPHONEOS_DEPLOYMENT_TARGET'
+#   deployment_targets = pods_project.build_configurations.map{ |config| config.build_settings[deployment_target_key] }
+#   minimal_deployment_target = deployment_targets.min_by{ |version| Gem::Version.new(version) }
+#   puts 'Minimal deployment target is ' + minimal_deployment_target
+#   puts 'Setting each pod deployment target to ' + minimal_deployment_target
+#   installer.pods_project.targets.each do |target|
+#     flutter_additional_ios_build_settings(target)
+#     target.build_configurations.each do |config|
+#       config.build_settings[deployment_target_key] = minimal_deployment_target
+#       config.build_settings['ENABLE_BITCODE'] = 'NO'
+#     end
+#   end
+# end
+
+# post_install do |installer|
+#   installer.pods_project.targets.each do |target|
+#       if target.name == 'NMessenger'
+#           target.build_configurations.each do |config|
+#               config.build_settings['SWIFT_VERSION'] = '3.0'
+#           end
+#       end
+#       if target.name == 'Kingfisher'
+#           target.build_configurations.each do |config|
+#               config.build_settings['SWIFT_VERSION'] = '4.2'
+#           end
+#       end
+#       if target.name == 'PopupDialog'
+#           target.build_configurations.each do |config|
+#               config.build_settings['SWIFT_VERSION'] = '4.2'
+#           end
+#       end
+#   end
+# end

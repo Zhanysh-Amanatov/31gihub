@@ -1,13 +1,15 @@
 /*External dependencies */
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 /*Local dependencies */
+import 'package:finik/routes/routes.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/drawer_list_button_widget.dart';
-import 'package:finik/screens/initial_view.dart';
+import 'package:finik/services/auth/bloc/auth_bloc.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -118,15 +120,16 @@ class _HomeViewState extends State<HomeView> {
                       SizedBox(height: 16.h),
                       ButtonWidget(
                         btnText: 'Войти',
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const InitialView(),
-                            ),
-                          );
-                        },
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed(logInRoute),
+                      ),
+                      SizedBox(height: 16.h),
+                      ButtonWidget(
+                        btnText: 'Регистрация',
+                        fgColor: const Color(0xFFACF709),
+                        bgColor: const Color(0xFF222222),
+                        onPressed: () =>
+                            Navigator.of(context).pushNamed(signUpEmailRoute),
                       ),
                     ],
                   )
@@ -285,15 +288,18 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                       SizedBox(height: 16.h),
-                      const ButtonWidget(
+                      ButtonWidget(
                         bgColor: Colors.transparent,
                         fgColor: const Color(0xFFACF709),
                         btnText: 'Выйти',
-                        // onPressed: () {
-                        //   context
-                        //       .read<AppBloc>()
-                        //       .add(const AppLogoutRequested());
-                        // },
+                        onPressed: () async {
+                          final shouldLogOut = await showLogOutDialog(context);
+                          if (shouldLogOut) {
+                            context.read<AuthBloc>().add(
+                                  const AuthEventLogOut(),
+                                );
+                          }
+                        },
                       )
                     ],
                   )
@@ -310,4 +316,27 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+}
+
+Future<bool> showLogOutDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Sign out'),
+          content: const Text('Are you sure you want to sign out?'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+                child: const Text('Cancel')),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: const Text('Log out'))
+          ],
+        );
+      }).then((value) => value ?? false);
 }

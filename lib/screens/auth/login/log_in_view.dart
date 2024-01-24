@@ -1,15 +1,41 @@
 /*External dependencies*/
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 /*Local dependencies*/
 import 'package:finik/routes/routes.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/input_label_widget.dart';
 import 'package:finik/screens/common/input_widget.dart';
 import 'package:finik/screens/common/logo_header_description_widget.dart';
+import 'package:finik/screens/common/show_error_dialog_widget.dart';
+import 'package:finik/services/auth/auth_exceptions.dart';
+import 'package:finik/services/auth/bloc/auth_bloc.dart';
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LovinViewState();
+}
+
+class _LovinViewState extends State<LoginView> {
+  late final TextEditingController _email;
+  late final TextEditingController _password;
+
+  @override
+  void initState() {
+    _email = TextEditingController();
+    _password = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +45,6 @@ class LoginForm extends StatelessWidget {
         foregroundColor: Colors.white,
       ),
       body: Container(
-        // height: double.infinity,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         color: const Color.fromARGB(255, 0, 0, 0),
@@ -45,7 +70,8 @@ class LoginForm extends StatelessWidget {
                 const InputLabelWidget(
                     inputLabel: 'Нам нужна только ваша почта'),
                 SizedBox(height: 16.h),
-                const InputWidget(
+                InputWidget(
+                  controller: _email,
                   inputType: TextInputType.emailAddress,
                   hintText: 'Enter email',
                   labelText: 'email',
@@ -54,7 +80,8 @@ class LoginForm extends StatelessWidget {
                 SizedBox(height: 16.h),
                 const InputLabelWidget(inputLabel: 'Введите пароль'),
                 SizedBox(height: 16.h),
-                const InputWidget(
+                InputWidget(
+                  controller: _password,
                   inputType: TextInputType.visiblePassword,
                   hintText: 'Enter password',
                   icon: const Icon(Icons.password),
@@ -84,10 +111,34 @@ class LoginForm extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 250.h),
-                const ButtonWidget(
+                SizedBox(height: 200.h),
+                ButtonWidget(
                   btnText: 'Далее',
-                  // routeName: logInLoadingRoute,
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    try {
+                      context.read<AuthBloc>().add(AuthEventLogIn(
+                            email,
+                            password,
+                          ));
+                    } on UserNotFoundAuthException {
+                      await showErrorDialog(
+                        context,
+                        'User not found',
+                      );
+                    } on WrongPasswordAuthException {
+                      await showErrorDialog(
+                        context,
+                        'Wrong password',
+                      );
+                    } on GenericAuthException {
+                      await showErrorDialog(
+                        context,
+                        'Authentication error',
+                      );
+                    }
+                  },
                 )
               ]),
             ),

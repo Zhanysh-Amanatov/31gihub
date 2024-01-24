@@ -59,7 +59,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 hintText: 'Enter email',
                 icon: const Icon(Icons.email),
               ),
-              SizedBox(height: 345.h),
+              SizedBox(height: 350.h),
               ButtonWidget(
                 btnText: 'Далее',
               )

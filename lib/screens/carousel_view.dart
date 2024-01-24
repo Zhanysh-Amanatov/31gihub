@@ -26,7 +26,6 @@ class MyItem {
 
 class CarouselView extends StatefulWidget {
   const CarouselView({super.key});
-  static Page<void> page() => const MaterialPage<void>(child: CarouselView());
 
   @override
   State<CarouselView> createState() => _CarouselViewState();

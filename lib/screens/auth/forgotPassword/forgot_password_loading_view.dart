@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 /*Local dependencies*/
-import 'package:finik/view_routes/routes.dart';
+import 'package:finik/routes/routes.dart';
 import 'package:finik/screens/common/button_widget.dart';
 import 'package:finik/screens/common/logo_header_description_widget.dart';
 
